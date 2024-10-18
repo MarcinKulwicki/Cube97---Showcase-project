@@ -30,6 +30,8 @@ namespace Cube.Gameplay.Player
 
         public void Respawn(Vector3 pos, Quaternion rot)
         {
+            _controls.Interrupt();
+            
             _visual.SetStatus(VisualStatus.Alive);
             transform.SetPositionAndRotation(pos, rot);
             _collider.enabled = false;

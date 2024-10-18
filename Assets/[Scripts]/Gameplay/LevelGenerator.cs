@@ -15,9 +15,7 @@ namespace Cube.Gameplay
 
         public void OnPlayerExitField()
         {
-            //TODO one of the direction will not Stop the game and move player to another lvl as a reward
-
-            GameHandler.Instance.SetStatus(GameStatus.StopGame);
+            GameHandler.Instance.SetStatus(GameStatus.NextLevel);
         }
 
         public Level[] Make(LevelInitData data)

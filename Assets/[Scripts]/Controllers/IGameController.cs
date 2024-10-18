@@ -8,5 +8,6 @@ namespace Cube.Controllers
         public void SetMusic(bool enableMusic);
         public void SetEffects(bool enableEffects);
         public AbstractGameSettings GetGameSettings();
+        public int GetLevelStage();
     }
 }

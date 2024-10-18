@@ -10,6 +10,15 @@ namespace Cube.Controllers
         [SerializeField]
         List<View> _views;
 
+        /// <summary>
+        ///     All views should be disabled at start
+        /// </summary>
+        private void Awake() 
+        {
+            foreach (var item in _views)
+                item.gameObject.SetActive(false);
+        }
+
         public void Active(ViewType viewType, AbstractGameData data, IGameController controller)
         {
             DeactivateAll();

@@ -7,6 +7,7 @@ namespace Cube.Controllers
 {
     public class LevelController : MonoBehaviour
     {
+        public int Stage { get; private set; }
         public Action<int> OnAppendScore;
         public LevelInitData InitData { get; private set; }    
 
@@ -14,18 +15,27 @@ namespace Cube.Controllers
         LevelGenerator _levelGenerator;
 
         [SerializeField]
-        int _dimension = 3, _step = 15;
+        int  _step = 15;
         [SerializeField]
         Difficulty _difficulty = Difficulty.Easy;
 
         Level[] _levels;
         private int _moveCounter = 0;
 
-        public void Generate()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stage">Pass positive number to generate specific Stage, otherwise will be next</param>
+        public void Generate(int stage = -1)
         {
+            if (stage < 0)
+                Stage++;
+            else
+                Stage = stage;
+            
             Clear();
-
-            InitData = new LevelInitData(_step, _dimension, _difficulty);
+            
+            InitData = new LevelInitData(_step, Stage, _difficulty);
             _levels = _levelGenerator.Make(InitData);
 
             foreach (var item in _levels)

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
@@ -28,12 +27,29 @@ namespace Cube.Controllers
         {
             _gameData.SetScore(0);
             _levelController.Reset();
+            TriggerLayer.Reset?.Invoke(); // Clear all collision information
+            _levelController.Generate(1);
+            _playerController.Respawn(_levelController.InitData);
+            CameraControl.Instance.Move(_levelController.InitData.StartPos);
+
             _viewController.Active(ViewType.GameOverlayView, _gameData, this);
+            _update = CoroutineContainer.Create(CUpdate());
+        }
+
+        public void NextLevel()
+        {
+            _levelController.DeactivateAll();
+
+            if (_update != null)
+                _update.Interrupt();
+
+            _levelController.Reset();
             TriggerLayer.Reset?.Invoke(); // Clear all collision information
             _levelController.Generate();
             _playerController.Respawn(_levelController.InitData);
             CameraControl.Instance.Move(_levelController.InitData.StartPos);
 
+            _viewController.Active(ViewType.GameOverlayView, _gameData, this);
             _update = CoroutineContainer.Create(CUpdate());
         }
 
@@ -84,6 +100,7 @@ namespace Cube.Controllers
         public void ChangeUserName(string userName) => _gameData.SetUserName(userName);
         public void SetMusic(bool enableMusic) => _gameSettings.SetMusic(enableMusic);
         public void SetEffects(bool enableEffects) => _gameSettings.SetEffects(enableEffects);
+        public int GetLevelStage() => _levelController.Stage;
         public AbstractGameSettings GetGameSettings() => _gameSettings;
 
 #endregion
@@ -97,7 +114,7 @@ namespace Cube.Controllers
             while (true)
             {
                 yield return new WaitForSeconds(1f);
-                _gameData.SetScore(_gameData.Score + 1);
+                _gameData.SetScore(_gameData.Score + 1 * _levelController.Stage);
             }
         }
 

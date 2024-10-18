@@ -9,7 +9,10 @@ namespace Cube.UI.View
     public class GameOverlayView : View
     {
         [SerializeField]
-        TextMeshProUGUI _scoreValue, _timerValue;
+        TextMeshProUGUI _scoreValue, _timerValue, _stageValue;
+
+        [SerializeField]
+        GameObject _viewBlocker;
 
         float _timer;
 
@@ -19,6 +22,8 @@ namespace Cube.UI.View
             OnScoreChanged(_gameData.Score);
             
             CoroutineContainer.Create(CTimer());
+            _stageValue.text = _controller.GetLevelStage().ToString();
+            _viewBlocker.SetActive(true);
         }
 
         private void OnDisable() 
@@ -40,6 +45,7 @@ namespace Cube.UI.View
             }
 
             _timerValue.gameObject.SetActive(false);
+            _viewBlocker.SetActive(false);
         }
 
         private void OnScoreChanged(int value) => _scoreValue.text = value.ToString();

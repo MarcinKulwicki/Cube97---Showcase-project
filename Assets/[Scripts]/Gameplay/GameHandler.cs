@@ -26,6 +26,7 @@ namespace Cube.Gameplay
                 { GameStatus.StartGame, () => _controller.StartGame() },
                 { GameStatus.StopGame, () => _controller.StopGame() },
                 { GameStatus.ResumeGame, () => _controller.ResumeGame() },
+                { GameStatus.NextLevel, () => _controller.NextLevel() },
                 
                 { GameStatus.MainMenu, () => _controller.MainMenu() },
                 { GameStatus.Settings, () => _controller.Settings() },
@@ -47,6 +48,7 @@ namespace Cube.Gameplay
         Settings = 4,
         HighScore = 5,
         Workshop = 6,
-        Achievements = 7
+        Achievements = 7,
+        NextLevel = 8
     }
 }
