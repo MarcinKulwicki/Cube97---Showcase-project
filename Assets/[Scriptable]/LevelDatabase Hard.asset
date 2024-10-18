@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c52119ba30b462eab4429d06a5d8a7, type: 3}
+  m_Name: LevelDatabase Hard
+  m_EditorClassIdentifier: 
+  <Difficulty>k__BackingField: 2
+  <Prefabs>k__BackingField:
+  - {fileID: 5767460024005603968, guid: 401d6d592f99c4b7facdaa191174b295, type: 3}
+  - {fileID: 6923537352426970272, guid: 163d8dabbae894aa3bce7451801ffb94, type: 3}
+  - {fileID: 8602349033495203779, guid: c54f38eaadc3d431a9098328366347fa, type: 3}
+  - {fileID: 992025858908824620, guid: 4b4428d9b24734e21b7b8becfd7ad634, type: 3}
+  - {fileID: 8862970052864798005, guid: 216f9b9e059d6460fab30691fe148526, type: 3}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c52119ba30b462eab4429d06a5d8a7, type: 3}
+  m_Name: LevelDatabase Easy
+  m_EditorClassIdentifier: 
+  <Difficulty>k__BackingField: 0
+  <Prefabs>k__BackingField:
+  - {fileID: 4472501436218886546, guid: ec1b5c6d578d5419188f8ce7f1f12b94, type: 3}
+  - {fileID: 7735194527320600566, guid: 59d6d65b2125b40f290eb002b91a2e35, type: 3}
+  - {fileID: 5054499685337198676, guid: 4fb6f18777d434b3ab6b7dd74b75039d, type: 3}
+  - {fileID: 48868299412369916, guid: 805c838af24874a0f874b8b8693cffaf, type: 3}
+  - {fileID: 300072535082842435, guid: c3896371f0dce402799e9470a9657eff, type: 3}
