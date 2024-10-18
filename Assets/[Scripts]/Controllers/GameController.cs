@@ -91,6 +91,9 @@ namespace Cube.Controllers
 #region Logic
         private IEnumerator CUpdate()
         {
+            yield return new WaitForSeconds(Validations.TIME_TO_GET_STARTED);
+            _playerController.Activate();
+
             while (true)
             {
                 yield return new WaitForSeconds(1f);

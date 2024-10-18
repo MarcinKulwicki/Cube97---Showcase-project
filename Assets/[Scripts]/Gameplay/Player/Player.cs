@@ -32,7 +32,9 @@ namespace Cube.Gameplay.Player
         {
             _visual.SetStatus(VisualStatus.Alive);
             transform.SetPositionAndRotation(pos, rot);
-            _collider.enabled = true;
+            _collider.enabled = false;
         }
+
+        public void Activate() => _collider.enabled = true;
     }
 }

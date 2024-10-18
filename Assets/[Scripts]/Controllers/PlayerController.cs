@@ -14,5 +14,6 @@ namespace Cube.Controllers
             _player.Respawn(levelInitData.StartPos, levelInitData.StartRot);
         }
         
+        public void Activate() => _player.Activate();
     }
 }
