@@ -12,7 +12,7 @@ namespace Cube.UI.View
         TextMeshProUGUI _scoreValue, _timerValue, _stageValue;
 
         [SerializeField]
-        GameObject _viewBlocker;
+        GameObject _viewBlocker, _successNextStage;
 
         float _timer;
 
@@ -22,7 +22,10 @@ namespace Cube.UI.View
             OnScoreChanged(_gameData.Score);
             
             CoroutineContainer.Create(CTimer());
-            _stageValue.text = _controller.GetLevelStage().ToString();
+
+            var stage = _controller.GetLevelStage();
+            _stageValue.text = stage.ToString();
+            _successNextStage.SetActive(stage > 1);
             _viewBlocker.SetActive(true);
         }
 
@@ -46,6 +49,7 @@ namespace Cube.UI.View
 
             _timerValue.gameObject.SetActive(false);
             _viewBlocker.SetActive(false);
+            _successNextStage.SetActive(false);
         }
 
         private void OnScoreChanged(int value) => _scoreValue.text = value.ToString();
