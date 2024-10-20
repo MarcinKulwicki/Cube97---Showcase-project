@@ -1,11 +1,12 @@
 using Cube.Controllers;
+using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Cube.UI.View
 {
-    public class MainMenuView : View
+    public class MainMenuView : View<INjectable>
     {
         [SerializeField]
         Button _startGameBtn, _settingsBtn, _highScoreBtn, _workshopBtn, _achievementsBtn;
@@ -36,7 +37,11 @@ namespace Cube.UI.View
         }
 
 #region Override
+
         public override ViewType ViewType => ViewType.MainMenuView;
+
+        public override void Inject(INjectable[] data) => throw new System.NotImplementedException();
+
 #endregion
     }
 }

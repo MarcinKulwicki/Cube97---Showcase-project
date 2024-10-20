@@ -8,7 +8,7 @@ namespace Cube.Controllers
     public class ViewController : MonoBehaviour
     {
         [SerializeField]
-        List<View> _views;
+        List<View<INjectable>> _views;
 
         /// <summary>
         ///     All views should be disabled at start
@@ -19,17 +19,19 @@ namespace Cube.Controllers
                 item.gameObject.SetActive(false);
         }
 
-        public void Active(ViewType viewType, AbstractGameData data, IGameController controller)
+        public View<INjectable> Active(ViewType viewType, AbstractGameData data, IGameController controller)
         {
             DeactivateAll();
 
-            if (GetView(viewType, out View item))
+            if (GetView(viewType, out View<INjectable> item))
                 item.Active(data, controller);
+
+            return item;
         }
 
         public void Deactivate(ViewType viewType)
         {
-            if (GetView(viewType, out View item) && item.IsActive)
+            if (GetView(viewType, out View<INjectable> item) && item.IsActive)
                 item.Deactivate();
         }
 
@@ -39,7 +41,7 @@ namespace Cube.Controllers
                 if (view.IsActive) view.Deactivate();
         }
 
-        private bool GetView(ViewType viewType, out View item)
+        private bool GetView(ViewType viewType, out View<INjectable> item)
         {
             item = _views.Find(view => view.ViewType == viewType);
             if (item == null)

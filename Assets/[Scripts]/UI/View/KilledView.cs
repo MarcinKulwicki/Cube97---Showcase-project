@@ -1,11 +1,12 @@
 using Cube.Controllers;
+using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Cube.UI.View
 {
-    public class KilledView : View
+    public class KilledView : View<INjectable>
     {
         [SerializeField]
         Button _resetBtn;
@@ -26,8 +27,12 @@ namespace Cube.UI.View
         }
 
 #region Override
+
         public override ViewType ViewType => ViewType.KilledView;
-#endregion
+
+        public override void Inject(INjectable[] data) => throw new System.NotImplementedException();
+
+        #endregion
 
     }
 }

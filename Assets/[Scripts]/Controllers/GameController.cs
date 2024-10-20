@@ -10,6 +10,7 @@ namespace Cube.Controllers
         [SerializeField] private LevelController _levelController;
         [SerializeField] private ViewController _viewController;
         [SerializeField] private PlayerController _playerController;
+        [SerializeField] private NetworkController _networkController;
 
         GameData _gameData;
         GameSettings _gameSettings;
@@ -55,6 +56,8 @@ namespace Cube.Controllers
 
         public void StopGame()
         {
+            _networkController.SendScore(_gameData);
+
             _levelController.DeactivateAll();
             CameraControl.Instance.Move(_levelController.InitData.StartPos);
             _viewController.Active(ViewType.KilledView, _gameData, this);
@@ -80,7 +83,12 @@ namespace Cube.Controllers
 
         public void HighScore()
         {
-            _viewController.Active(ViewType.HighScore, _gameData, this);
+            var item = _viewController.Active(ViewType.HighScore, _gameData, this);
+
+            _networkController.GetTopScores ( result => 
+            {
+                item.Inject(result);
+            }, Validations.TOP_SCORE_COUNT );
         }
 
         public void Workshop()

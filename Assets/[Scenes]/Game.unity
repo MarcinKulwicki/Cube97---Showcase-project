@@ -357,6 +357,52 @@ MonoBehaviour:
   _onExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &274401466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 274401467}
+  - component: {fileID: 274401468}
+  m_Layer: 0
+  m_Name: NetworkController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &274401467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274401466}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 526614896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &274401468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274401466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c85e460075443e9b0cc0270adca542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
+  <IsOnline>k__BackingField: 0
 --- !u!1 &526614895
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +437,7 @@ Transform:
   - {fileID: 1488586575}
   - {fileID: 861647867}
   - {fileID: 1287790276}
+  - {fileID: 274401467}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &526614897
@@ -1048,7 +1095,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelGenerator: {fileID: 1448836108}
-  _dimension: 3
   _step: 15
   _difficulty: 0
 --- !u!1 &1591584456
@@ -1098,6 +1144,7 @@ MonoBehaviour:
   _levelController: {fileID: 1488586576}
   _viewController: {fileID: 861647868}
   _playerController: {fileID: 1287790277}
+  _networkController: {fileID: 274401468}
 --- !u!1 &1779120512
 GameObject:
   m_ObjectHideFlags: 0
