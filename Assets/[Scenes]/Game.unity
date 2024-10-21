@@ -1144,6 +1144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _viewController: {fileID: 861647868}
   _networkController: {fileID: 274401468}
+  _levelController: {fileID: 1488586576}
 --- !u!1 &1779120512
 GameObject:
   m_ObjectHideFlags: 0

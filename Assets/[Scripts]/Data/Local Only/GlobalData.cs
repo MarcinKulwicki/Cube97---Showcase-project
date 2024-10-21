@@ -18,6 +18,8 @@ namespace Cube.Data
         private ViewController _viewController;
         [SerializeField]
         private NetworkController _networkController;
+        [SerializeField]
+        private LevelController _levelController;
 
         private GameData _gameData;
         private GameSettings _gameSettings;
@@ -35,9 +37,11 @@ namespace Cube.Data
             GameHandler.Instance.OnGameStart += ClearScore;
             GameHandler.Instance.OnGameStop += SendData;
 
-            _viewController.GetView<SettingsView>().UserNameChanged += OnUsernameChanged;
-            _viewController.GetView<SettingsView>().MusicOnChanged += OnMusicOnChanged;
-            _viewController.GetView<SettingsView>().EffectsOnChanged += OnEffectsOnChanged;
+            _levelController.OnStageChanged += StageChanged;
+
+            _viewController.GetView<SettingsView>().OnUserNameChanged += UsernameChanged;
+            _viewController.GetView<SettingsView>().OnMusicOnChanged += MusicOnChanged;
+            _viewController.GetView<SettingsView>().OnEffectsOnChanged += EffectsOnChanged;
         }
 
         private void OnDestroy() 
@@ -45,16 +49,19 @@ namespace Cube.Data
             GameHandler.Instance.OnGameStart -= ClearScore;
             GameHandler.Instance.OnGameStop -= SendData;
 
-            _viewController.GetView<SettingsView>().UserNameChanged -= OnUsernameChanged;
-            _viewController.GetView<SettingsView>().MusicOnChanged -= OnMusicOnChanged;
-            _viewController.GetView<SettingsView>().EffectsOnChanged -= OnEffectsOnChanged;
+            _levelController.OnStageChanged -= StageChanged;
+
+            _viewController.GetView<SettingsView>().OnUserNameChanged -= UsernameChanged;
+            _viewController.GetView<SettingsView>().OnMusicOnChanged -= MusicOnChanged;
+            _viewController.GetView<SettingsView>().OnEffectsOnChanged -= EffectsOnChanged;
         }
         #endregion
 
         private void ClearScore() => _gameData.SetScore(0);
         private void SendData() => _networkController.SendScore(_gameData);
-        private void OnUsernameChanged(string userName) => _gameData.SetUserName(userName);
-        private void OnMusicOnChanged(bool enable) => _gameSettings.SetMusic(enable);
-        private void OnEffectsOnChanged(bool enable) => _gameSettings.SetEffects(enable);
+        private void StageChanged(int value) => _gameData.SetLevelStage(value);
+        private void UsernameChanged(string userName) => _gameData.SetUserName(userName);
+        private void MusicOnChanged(bool enable) => _gameSettings.SetMusic(enable);
+        private void EffectsOnChanged(bool enable) => _gameSettings.SetEffects(enable);
     }
 }

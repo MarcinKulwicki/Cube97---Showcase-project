@@ -18,20 +18,19 @@ namespace Cube.UI.View
         #region MonoBehaviour
         private void OnEnable() 
         {
-            _data.GameData.OnScoreChanged += OnScoreChanged;
-            OnScoreChanged(_data.GameData.Score);
+            _data.GameData.OnScoreChanged += ScoreChanged;
+            _data.GameData.OnLevelStageChanged += LevelStageChanged;
             
             CoroutineContainer.Create(TimerLoop());
 
-            var stage = _data.GameData.LevelStage;
-            _stageValue.text = stage.ToString();
-            _successNextStage.SetActive(stage > 1);
+            _successNextStage.SetActive(_data.GameData.LevelStage > 0);
             _viewBlocker.SetActive(true);
         }
 
         private void OnDisable() 
         {
-            _data.GameData.OnScoreChanged -= OnScoreChanged;
+            _data.GameData.OnScoreChanged -= ScoreChanged;
+            _data.GameData.OnLevelStageChanged -= LevelStageChanged;
         }
         #endregion
 
@@ -53,7 +52,8 @@ namespace Cube.UI.View
             _successNextStage.SetActive(false);
         }
 
-        private void OnScoreChanged(int value) => _scoreValue.text = value.ToString();
+        private void ScoreChanged(int value) => _scoreValue.text = value.ToString();
+        private void LevelStageChanged(int value) => _stageValue.text = value.ToString();
         
         #region Override
         public override ViewType ViewType => ViewType.GameOverlayView;

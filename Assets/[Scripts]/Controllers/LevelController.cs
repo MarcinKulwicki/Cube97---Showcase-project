@@ -1,3 +1,4 @@
+using System;
 using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace Cube.Controllers
     public class LevelController : MonoBehaviour
     {
         #region Variables
+        public Action<int> OnStageChanged;
+
         public LevelInitData InitData { get; private set; }   
         
         [Header("References")]
@@ -64,6 +67,7 @@ namespace Cube.Controllers
         private void GameStop()
         {
             _stage = 0;
+            OnStageChanged?.Invoke(_stage);
 
             DeactivateAll();
             CameraControl.Instance.Move(InitData.StartPos);
@@ -79,6 +83,7 @@ namespace Cube.Controllers
                 _stage++;
             else
                 _stage = stage;
+            OnStageChanged?.Invoke(_stage);
             
             Clear();
             
@@ -112,9 +117,9 @@ namespace Cube.Controllers
         {
             StartPos = new Vector3
             ( 
-                Random.Range(0, dimension) * step,
+                UnityEngine.Random.Range(0, dimension) * step,
                 0, 
-                Random.Range(0, dimension) * step
+                UnityEngine.Random.Range(0, dimension) * step
             ); 
             StartRot = Quaternion.identity;
             Step = step;
