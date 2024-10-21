@@ -1,6 +1,5 @@
 using System;
 using Cube.Data;
-using Cube.Gameplay;
 using UnityEngine;
 
 namespace Cube.Controllers
@@ -10,21 +9,6 @@ namespace Cube.Controllers
         public static bool IsOnline { get; private set; } = false; //TODO move it to NetworkConfig when will be ScriptableObject
         
         public TopScoreData TopScoreData { get; private set; } = new();
-
-        [SerializeField]
-        private GlobalData _globalData;
-
-        #region MonoBehaviour
-        private void Start() 
-        {
-            GameHandler.Instance.OnGameStop += StopGame;
-        }
-
-        private void OnDestroy() 
-        {
-            GameHandler.Instance.OnGameStop -= StopGame;
-        }
-        #endregion
 
         public void GetTopScores(Action<TopScoreItemData[]> OnSuccess, int limit)
         {
@@ -38,9 +22,7 @@ namespace Cube.Controllers
             error =>  Debug.Log(error));
         }
 
-        private void StopGame() => SendScore(_globalData.GameData);
-
-        private void SendScore(GameData data)
+        public void SendScore(GameData data)
         {
             TopScoreData.Post
             (

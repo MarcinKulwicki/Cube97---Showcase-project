@@ -401,9 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c85e460075443e9b0cc0270adca542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontDestroyOnLoad: 0
-  <IsOnline>k__BackingField: 0
-  _globalData: {fileID: 1591584458}
 --- !u!1 &526614895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d0133eb8e69441a9ef46fa52dfdf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _viewController: {fileID: 861647868}
+  _networkController: {fileID: 274401468}
 --- !u!1 &1779120512
 GameObject:
   m_ObjectHideFlags: 0

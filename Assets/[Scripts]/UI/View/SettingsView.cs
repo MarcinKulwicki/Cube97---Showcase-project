@@ -1,3 +1,4 @@
+using System;
 using Cube.Controllers;
 using Cube.Data;
 using Cube.Gameplay;
@@ -9,6 +10,10 @@ namespace Cube.UI.View
 {
     public class SettingsView : View
     {
+        public Action<string> UserNameChanged;
+        public Action<bool> MusicOnChanged;
+        public Action<bool> EffectsOnChanged;
+
         [Header("References")]
         [SerializeField]
         private Button _backBtn;
@@ -45,13 +50,13 @@ namespace Cube.UI.View
         private void OnBack()
         {
             if (_userName.text.Length >= Validations.MIN_LETTERS_USER_NAME)
-                _data.GameData.SetUserName(_userName.text);
+                UserNameChanged?.Invoke(_userName.text);
 
             GameHandler.Instance.SetStatus(GameStatus.MainMenu);
         }
 
-        private void OnMusicChanged(bool enable) => _data.GameSettings.SetMusic(enable);
-        private void OnEffectsChanged(bool enable) => _data.GameSettings.SetEffects(enable);
+        private void OnMusicChanged(bool enable) => MusicOnChanged?.Invoke(enable);
+        private void OnEffectsChanged(bool enable) => EffectsOnChanged?.Invoke(enable);
         
         #region Override
         public override ViewType ViewType => ViewType.Settings;

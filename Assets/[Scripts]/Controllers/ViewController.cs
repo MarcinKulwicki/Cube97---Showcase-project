@@ -69,7 +69,7 @@ namespace Cube.Controllers
         }
         #endregion
 
-        private T GetView<T>() where T : View
+        public T GetView<T>() where T : View
         {
             for (int i = 0; i < _views.Count; i++)
             {

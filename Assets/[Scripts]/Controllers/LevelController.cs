@@ -1,4 +1,3 @@
-using System.Collections;
 using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
@@ -10,16 +9,6 @@ namespace Cube.Controllers
         #region Variables
         public LevelInitData InitData { get; private set; }   
         
-        public int Stage 
-        { 
-            get { return _stage; }
-            private set 
-            {
-                _globalData.GameData.SetLevelStage(value);
-                _stage = value;
-            }
-        }
-
         [Header("References")]
         [SerializeField]
         private LevelGenerator _levelGenerator;
@@ -35,8 +24,6 @@ namespace Cube.Controllers
         private int _step = 15;
         
         private Level[] _levels;
-        private CoroutineContainer _gameLoop;
-        private int _moveCounter = 0;
         private int _stage = 0;
         #endregion
 
@@ -56,32 +43,17 @@ namespace Cube.Controllers
         }
         #endregion
 
-        //TODO It should be calculated somewhere else. Score should be increased only when player can move
-        private IEnumerator GameLoop()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(1);
-                _globalData.GameData.AddScore(Stage);
-            }
-        }
-
         private void GameStart()
         {
-            _moveCounter = 0;
-
             TriggerLayer.Reset?.Invoke(); // Clear all collision information
             Generate(1);
             _playerController.Respawn(InitData);
             CameraControl.Instance.Move(InitData.StartPos);
-
-            _gameLoop = CoroutineContainer.Create(GameLoop());
         }
 
         private void NextLevel()
         {
             DeactivateAll();
-            _moveCounter = 0;
             
             TriggerLayer.Reset?.Invoke(); // Clear all collision information
             Generate();
@@ -91,12 +63,10 @@ namespace Cube.Controllers
 
         private void GameStop()
         {
-            Stage = 0;
+            _stage = 0;
 
             DeactivateAll();
             CameraControl.Instance.Move(InitData.StartPos);
-
-            _gameLoop.Interrupt();
         }
 
         /// <summary>
@@ -106,17 +76,14 @@ namespace Cube.Controllers
         private void Generate(int stage = -1)
         {
             if (stage < 0)
-                Stage++;
+                _stage++;
             else
-                Stage = stage;
+                _stage = stage;
             
             Clear();
             
-            InitData = new LevelInitData(_step, Stage, _difficulty);
+            InitData = new LevelInitData(_step, _stage, _difficulty);
             _levels = _levelGenerator.Make(InitData);
-
-            foreach (var item in _levels)
-                item.OnNextAreaReached += AppendScore;
         }
 
         private void DeactivateAll()
@@ -128,21 +95,8 @@ namespace Cube.Controllers
         private void Clear()
         {
             if (_levels != null)
-            {
                 foreach (var item in _levels)
-                {
-                    item.OnNextAreaReached -= AppendScore;
                     Destroy(item.gameObject);
-                }
-            }
-        }
-
-        private void AppendScore()
-        {
-            if (_moveCounter > 0)
-                _globalData.GameData.AddScore(10);
-            
-            _moveCounter++;
         }
     }
 

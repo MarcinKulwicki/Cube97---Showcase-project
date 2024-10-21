@@ -21,8 +21,6 @@ namespace Cube.Data
 
         public void SetScore(int score) => Score = score;
 
-        public void AddScore(int score) => Score += score;
-
         public void SetLevelStage(int stage) => LevelStage = stage;
     }
 }
