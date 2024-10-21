@@ -9,35 +9,15 @@ namespace Cube.UI.View
 {
     public class SettingsView : View<INjectable>
     {
+        [Header("References")]
         [SerializeField]
-        Button _backBtn;
-
+        private Button _backBtn;
         [SerializeField]
-        Toggle _music, _effects;
-
+        private Toggle _music, _effects;
         [SerializeField]
-        TMP_InputField _userName;
+        private TMP_InputField _userName;
 
-        public override void Active(AbstractGameData data, IGameController controller)
-        {
-            base.Active(data, controller);
-
-            _music.isOn = _controller.GetGameSettings().MusicOn;
-            _effects.isOn = _controller.GetGameSettings().EffectsOn;
-            _userName.text = _gameData.UserName;
-        }
-
-        private void OnBack()
-        {
-            if (_userName.text.Length >= Validations.MIN_LETTERS_USER_NAME)
-                _controller.ChangeUserName(_userName.text);
-
-            GameHandler.Instance.SetStatus(GameStatus.MainMenu);
-        }
-
-        private void OnMusicChanged(bool enable) => _controller.SetMusic(enable);
-        private void OnEffectsChanged(bool enable) => _controller.SetEffects(enable);
-
+        #region MonoBehaviour
         private void OnEnable() 
         {
             _backBtn.onClick.AddListener(OnBack);
@@ -51,6 +31,27 @@ namespace Cube.UI.View
             _music.onValueChanged.RemoveAllListeners();
             _effects.onValueChanged.RemoveAllListeners();
         }
+        #endregion
+
+        public override void Active(GlobalData data)
+        {
+            base.Active(data);
+
+            _music.isOn = _data.GameSettings.MusicOn;
+            _effects.isOn = _data.GameSettings.EffectsOn;
+            _userName.text = _data.GameData.UserName;
+        }
+
+        private void OnBack()
+        {
+            if (_userName.text.Length >= Validations.MIN_LETTERS_USER_NAME)
+                _data.GameData.SetUserName(_userName.text);
+
+            GameHandler.Instance.SetStatus(GameStatus.MainMenu);
+        }
+
+        private void OnMusicChanged(bool enable) => _data.GameSettings.SetMusic(enable);
+        private void OnEffectsChanged(bool enable) => _data.GameSettings.SetEffects(enable);
         
 #region Override
 

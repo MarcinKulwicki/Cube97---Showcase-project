@@ -1,26 +1,30 @@
 using System;
 using Cube.Data;
+using Cube.Gameplay;
 using UnityEngine;
 
 namespace Cube.Controllers
 {
-    // TODO IsOnline should be moved in some sort of config and then there is no reason to keep that class as Singleton
-    public class NetworkController : Singleton<NetworkController>
+    public class NetworkController : MonoBehaviour
     {
-        [field: SerializeField]
-        public bool IsOnline { get; private set; } = false;
-
+        public static bool IsOnline { get; private set; } = false; //TODO move it to NetworkConfig when will be ScriptableObject
+        
         public TopScoreData TopScoreData { get; private set; } = new();
 
-        public void SendScore(GameData data)
+        [SerializeField]
+        private GlobalData _globalData;
+
+        #region MonoBehaviour
+        private void Start() 
         {
-            TopScoreData.Post
-            (
-                new TopScoreItemData(data.UserName, data.Score),
-                result => Debug.Log(result),
-                OnFail
-            );
+            GameHandler.Instance.OnGameStop += StopGame;
         }
+
+        private void OnDestroy() 
+        {
+            GameHandler.Instance.OnGameStop -= StopGame;
+        }
+        #endregion
 
         public void GetTopScores(Action<TopScoreItemData[]> OnSuccess, int limit)
         {
@@ -32,6 +36,18 @@ namespace Cube.Controllers
                 );
             }, 
             error =>  Debug.Log(error));
+        }
+
+        private void StopGame() => SendScore(_globalData.GameData);
+
+        private void SendScore(GameData data)
+        {
+            TopScoreData.Post
+            (
+                new TopScoreItemData(data.UserName, data.Score),
+                result => Debug.Log(result),
+                OnFail
+            );
         }
 
         private void OnFail(string message) => Debug.LogWarning(message);

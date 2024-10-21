@@ -9,21 +9,21 @@ namespace Cube.UI.View
     public class GameOverlayView : View<INjectable>
     {
         [SerializeField]
-        TextMeshProUGUI _scoreValue, _timerValue, _stageValue;
-
+        private TextMeshProUGUI _scoreValue, _timerValue, _stageValue;
         [SerializeField]
-        GameObject _viewBlocker, _successNextStage;
+        private GameObject _viewBlocker, _successNextStage;
 
-        float _timer;
+        private float _timer;
 
+        #region MonoBehaviour
         private void OnEnable() 
         {
-            _gameData.OnScoreChanged += OnScoreChanged;
-            OnScoreChanged(_gameData.Score);
+            _data.GameData.OnScoreChanged += OnScoreChanged;
+            OnScoreChanged(_data.GameData.Score);
             
-            CoroutineContainer.Create(CTimer());
+            CoroutineContainer.Create(TimerLoop());
 
-            var stage = _controller.GetLevelStage();
+            var stage = _data.GameData.LevelStage;
             _stageValue.text = stage.ToString();
             _successNextStage.SetActive(stage > 1);
             _viewBlocker.SetActive(true);
@@ -31,10 +31,11 @@ namespace Cube.UI.View
 
         private void OnDisable() 
         {
-            _gameData.OnScoreChanged -= OnScoreChanged;
+            _data.GameData.OnScoreChanged -= OnScoreChanged;
         }
+        #endregion
 
-        IEnumerator CTimer()
+        private IEnumerator TimerLoop()
         {
             _timer = 0f;
             _timerValue.gameObject.SetActive(true);

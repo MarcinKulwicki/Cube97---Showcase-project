@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cube.Data;
+using Cube.Gameplay;
 using Cube.UI.View;
 using UnityEngine;
 
@@ -7,9 +8,15 @@ namespace Cube.Controllers
 {
     public class ViewController : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField]
-        List<View<INjectable>> _views;
+        private List<View<INjectable>> _views;
+        [SerializeField]
+        private GlobalData _globalData;
+        [SerializeField]
+        private NetworkController _networkController;
 
+        #region MonoBehaviour
         /// <summary>
         ///     All views should be disabled at start
         /// </summary>
@@ -19,23 +26,60 @@ namespace Cube.Controllers
                 item.gameObject.SetActive(false);
         }
 
-        public View<INjectable> Active(ViewType viewType, AbstractGameData data, IGameController controller)
+        private void OnEnable() 
+        {
+            GameHandler.Instance.OnGameStart += GameStart;
+            GameHandler.Instance.OnGameStop += GameStop;
+            GameHandler.Instance.OnNextLevel += NextLevel;
+            GameHandler.Instance.OnMainMenu += MainMenu;
+            GameHandler.Instance.OnSettings += Settings;
+            GameHandler.Instance.OnHighScore += HighScore;
+            GameHandler.Instance.OnWorkshop += Workshop;
+            GameHandler.Instance.OnAchievements += Achievements;
+        }
+
+        private void OnDisable() 
+        {
+            GameHandler.Instance.OnGameStart -= GameStart;
+            GameHandler.Instance.OnGameStop -= GameStop;
+            GameHandler.Instance.OnNextLevel -= NextLevel;
+            GameHandler.Instance.OnMainMenu -= MainMenu;
+            GameHandler.Instance.OnSettings -= Settings;
+            GameHandler.Instance.OnHighScore -= HighScore;
+            GameHandler.Instance.OnWorkshop -= Workshop;
+            GameHandler.Instance.OnAchievements -= Achievements;
+        }
+        #endregion
+
+        #region Redirections
+        private void GameStart() => Active(ViewType.GameOverlayView, _globalData);
+        private void GameStop() => Active(ViewType.KilledView, _globalData);
+        private void NextLevel() => Active(ViewType.GameOverlayView, _globalData);
+        private void MainMenu() => Active(ViewType.MainMenuView, _globalData);
+        private void Settings() => Active(ViewType.Settings, _globalData);
+        private void Workshop() => Active(ViewType.Workshop, _globalData);
+        private void Achievements() => Active(ViewType.Achievements, _globalData);
+        private void HighScore()
+        {
+            var item = Active(ViewType.HighScore, _globalData);
+            _networkController.GetTopScores ( result => 
+            {
+                item.Inject(result); // TODO InjectTopScore
+            }, Validations.TOP_SCORE_COUNT );
+        }
+        #endregion
+
+        private View<INjectable> Active(ViewType viewType, GlobalData data)
         {
             DeactivateAll();
 
             if (GetView(viewType, out View<INjectable> item))
-                item.Active(data, controller);
+                item.Active(data);
 
             return item;
         }
 
-        public void Deactivate(ViewType viewType)
-        {
-            if (GetView(viewType, out View<INjectable> item) && item.IsActive)
-                item.Deactivate();
-        }
-
-        public void DeactivateAll()
+        private void DeactivateAll()
         {
             foreach (var view in _views)
                 if (view.IsActive) view.Deactivate();

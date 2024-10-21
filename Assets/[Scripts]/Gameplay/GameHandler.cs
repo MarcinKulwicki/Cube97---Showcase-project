@@ -1,42 +1,48 @@
 using System;
 using System.Collections.Generic;
-using Cube.Controllers;
 using UnityEngine;
 
 namespace Cube.Gameplay
 {
+    /// <summary>
+    ///     Simplified game state machine
+    /// </summary>
     public class GameHandler : Singleton<GameHandler>
     {
-        [SerializeField]
-        GameStatus _initStatus;
+        #region  Events
+        public Action OnGameStart, OnGameStop, OnGameResume, OnNextLevel;
+        public Action OnMainMenu, OnSettings, OnHighScore, OnWorkshop, OnAchievements;
+        #endregion
 
+        [Header("Properties")]
         [SerializeField]
-        private GameController _controller;
+        private GameStatus _initStatus;
 
         private Dictionary<GameStatus, Action> _states;
 
-        public void SetStatus(GameStatus command) => _states[command].Invoke();
-
+        #region MonoBehaviour
         protected override void Awake() 
         {
             base.Awake();
 
             _states = new()
             {
-                { GameStatus.StartGame, () => _controller.StartGame() },
-                { GameStatus.StopGame, () => _controller.StopGame() },
-                { GameStatus.ResumeGame, () => _controller.ResumeGame() },
-                { GameStatus.NextLevel, () => _controller.NextLevel() },
-                
-                { GameStatus.MainMenu, () => _controller.MainMenu() },
-                { GameStatus.Settings, () => _controller.Settings() },
-                { GameStatus.HighScore, () => _controller.HighScore() },
-                { GameStatus.Workshop, () => _controller.Workshop() },
-                { GameStatus.Achievements, () => _controller.Achievements() },
+                { GameStatus.StartGame, () => OnGameStart?.Invoke() },
+                { GameStatus.StopGame, () => OnGameStop?.Invoke() },
+                { GameStatus.ResumeGame, () => OnGameResume?.Invoke() },
+                { GameStatus.NextLevel, () => OnNextLevel?.Invoke() },
+                { GameStatus.MainMenu, () => OnMainMenu?.Invoke() },
+                { GameStatus.Settings, () => OnSettings?.Invoke() },
+                { GameStatus.HighScore, () => OnHighScore?.Invoke() },
+                { GameStatus.Workshop, () => OnWorkshop?.Invoke() },
+                { GameStatus.Achievements, () => OnAchievements?.Invoke() },
             };
         }
 
         private void Start() => SetStatus(_initStatus);
+        #endregion
+
+        public void SetStatus(GameStatus command) => _states[command].Invoke();
     }
 
     public enum GameStatus

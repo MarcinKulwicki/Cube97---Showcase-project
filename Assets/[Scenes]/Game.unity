@@ -403,6 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   <IsOnline>k__BackingField: 0
+  _globalData: {fileID: 1591584458}
 --- !u!1 &526614895
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +455,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   _initStatus: 3
-  _controller: {fileID: 1591584458}
 --- !u!224 &703962699 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 340434662881774627, guid: e75d095d9aa8a4b7ebaac9f7bba6fd83, type: 3}
@@ -725,6 +725,8 @@ MonoBehaviour:
   - {fileID: 5036565740233428668}
   - {fileID: 7089286315180369195}
   - {fileID: 1234075354375896264}
+  _globalData: {fileID: 1591584458}
+  _networkController: {fileID: 274401468}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,8 +1097,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelGenerator: {fileID: 1448836108}
-  _step: 15
+  _playerController: {fileID: 1287790277}
+  _globalData: {fileID: 1591584458}
   _difficulty: 0
+  _step: 15
 --- !u!1 &1591584456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,7 +1112,7 @@ GameObject:
   - component: {fileID: 1591584457}
   - component: {fileID: 1591584458}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: GlobalData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1138,13 +1142,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1591584456}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c1c6900bbe54f05a12e5fa8da0fb91, type: 3}
+  m_Script: {fileID: 11500000, guid: b3d0133eb8e69441a9ef46fa52dfdf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelController: {fileID: 1488586576}
-  _viewController: {fileID: 861647868}
-  _playerController: {fileID: 1287790277}
-  _networkController: {fileID: 274401468}
 --- !u!1 &1779120512
 GameObject:
   m_ObjectHideFlags: 0

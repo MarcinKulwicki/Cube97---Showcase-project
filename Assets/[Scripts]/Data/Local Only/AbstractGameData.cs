@@ -7,6 +7,8 @@ namespace Cube.Data
         public Action<int> OnScoreChanged;
         
         public string UserName { get; protected set; }
+        public int LevelStage { get; protected set; }
+
         public int Score
         {
             get { return _score; }

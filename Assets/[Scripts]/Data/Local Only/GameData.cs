@@ -6,6 +6,11 @@ namespace Cube.Data
     {
         private static readonly string USER_NAME_KEY = "UserName";
 
+        public GameData()
+        {
+            UserName = PlayerPrefs.GetString(USER_NAME_KEY, "Default Name");
+        }
+
         public void SetUserName(string userName) 
         {
             PlayerPrefs.SetString(USER_NAME_KEY, userName);
@@ -16,9 +21,8 @@ namespace Cube.Data
 
         public void SetScore(int score) => Score = score;
 
-        public GameData()
-        {
-            UserName = PlayerPrefs.GetString(USER_NAME_KEY, "Default Name");
-        }
+        public void AddScore(int score) => Score += score;
+
+        public void SetLevelStage(int stage) => LevelStage = stage;
     }
 }
