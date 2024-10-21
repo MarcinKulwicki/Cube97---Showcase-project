@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Cube.UI.View
 {
-    public class SettingsView : View<INjectable>
+    public class SettingsView : View
     {
         [Header("References")]
         [SerializeField]
@@ -53,12 +53,8 @@ namespace Cube.UI.View
         private void OnMusicChanged(bool enable) => _data.GameSettings.SetMusic(enable);
         private void OnEffectsChanged(bool enable) => _data.GameSettings.SetEffects(enable);
         
-#region Override
-
+        #region Override
         public override ViewType ViewType => ViewType.Settings;
-
-        public override void Inject(INjectable[] data) => throw new System.NotImplementedException();
-
-#endregion
+        #endregion
     }
 }

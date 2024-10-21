@@ -1,15 +1,14 @@
 using Cube.Controllers;
-using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Cube.UI.View
 {
-    public class KilledView : View<INjectable>
+    public class KilledView : View
     {
         [SerializeField]
-        Button _resetBtn;
+        private Button _resetBtn;
 
         private void OnReset()
         {
@@ -26,12 +25,8 @@ namespace Cube.UI.View
             _resetBtn.onClick.RemoveAllListeners();
         }
 
-#region Override
-
+        #region Override
         public override ViewType ViewType => ViewType.KilledView;
-
-        public override void Inject(INjectable[] data) => throw new System.NotImplementedException();
-
         #endregion
 
     }

@@ -1,15 +1,14 @@
 using Cube.Controllers;
-using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Cube.UI.View
 {
-    public class AchievementsView : View<INjectable>
+    public class AchievementsView : View
     {
         [SerializeField]
-        Button _backBtn;
+        private Button _backBtn;
 
         private void OnBack()
         {
@@ -26,12 +25,8 @@ namespace Cube.UI.View
             _backBtn.onClick.RemoveAllListeners();
         }
         
-#region Override
-
-    public override ViewType ViewType => ViewType.Achievements;
-
-    public override void Inject(INjectable[] data) => throw new System.NotImplementedException();
-
-#endregion
+        #region Override
+        public override ViewType ViewType => ViewType.Achievements;
+        #endregion
     }
 }

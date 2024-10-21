@@ -1,22 +1,14 @@
 using Cube.Controllers;
-using Cube.Data;
 using Cube.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Cube.UI.View
 {
-    public class MainMenuView : View<INjectable>
+    public class MainMenuView : View
     {
         [SerializeField]
         Button _startGameBtn, _settingsBtn, _highScoreBtn, _workshopBtn, _achievementsBtn;
-
-        private void OnStartGame() => GameHandler.Instance.SetStatus(GameStatus.StartGame);
-        private void OnSettings() => GameHandler.Instance.SetStatus(GameStatus.Settings);
-        private void OnHighScore() => GameHandler.Instance.SetStatus(GameStatus.HighScore);
-        private void OnWorkshop() => GameHandler.Instance.SetStatus(GameStatus.Workshop);
-        private void OnAchievements() => GameHandler.Instance.SetStatus(GameStatus.Achievements);
-        
 
         private void OnEnable() 
         {
@@ -36,12 +28,14 @@ namespace Cube.UI.View
             _achievementsBtn.onClick.RemoveAllListeners();
         }
 
-#region Override
+        private void OnStartGame() => GameHandler.Instance.SetStatus(GameStatus.StartGame);
+        private void OnSettings() => GameHandler.Instance.SetStatus(GameStatus.Settings);
+        private void OnHighScore() => GameHandler.Instance.SetStatus(GameStatus.HighScore);
+        private void OnWorkshop() => GameHandler.Instance.SetStatus(GameStatus.Workshop);
+        private void OnAchievements() => GameHandler.Instance.SetStatus(GameStatus.Achievements);
 
+        #region Override
         public override ViewType ViewType => ViewType.MainMenuView;
-
-        public override void Inject(INjectable[] data) => throw new System.NotImplementedException();
-
-#endregion
+        #endregion
     }
 }

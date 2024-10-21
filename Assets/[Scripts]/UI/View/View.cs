@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cube.UI.View
 {
-    public abstract class View<INjectable> : MonoBehaviour
+    public abstract class View : MonoBehaviour
     {
         public bool IsActive { get; private set;}
         public virtual ViewType ViewType { get; private set;} = ViewType.None;
@@ -24,7 +24,5 @@ namespace Cube.UI.View
             gameObject.SetActive(IsActive);
             _data = null;
         }
-
-        public abstract void Inject(INjectable[] data);
     }
 }

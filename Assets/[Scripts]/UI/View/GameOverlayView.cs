@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Cube.UI.View
 {
-    public class GameOverlayView : View<INjectable>
+    public class GameOverlayView : View
     {
         [SerializeField]
         private TextMeshProUGUI _scoreValue, _timerValue, _stageValue;
@@ -55,12 +55,8 @@ namespace Cube.UI.View
 
         private void OnScoreChanged(int value) => _scoreValue.text = value.ToString();
         
-#region Override
-
+        #region Override
         public override ViewType ViewType => ViewType.GameOverlayView;
-
-        public override void Inject(INjectable[] data) => throw new System.NotImplementedException();
-
-#endregion
+        #endregion
     }
 }

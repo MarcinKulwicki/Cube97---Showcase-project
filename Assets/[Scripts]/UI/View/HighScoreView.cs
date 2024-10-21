@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Cube.UI.View
 {
-    public class HighScoreView : View<INjectable>
+    public class HighScoreView : View
     {
         [SerializeField]
         Button _backBtn;
@@ -39,24 +39,20 @@ namespace Cube.UI.View
                 item.gameObject.SetActive(false);
         }
 
-#region Override
-
-        public override ViewType ViewType => ViewType.HighScore;
-
-        public override void Inject(INjectable[] data)
+        public void Inject(TopScoreItemData[] data)
         {
             for(int i = 0; i < data.Length; i++)
             {
                 if (_items.Count <= i)
                     _items.Add(Instantiate(_topScoreItem, _topScoreParent));
-                 
-                TopScoreItemData item = (TopScoreItemData) data[i];
                 
                 _items[i].gameObject.SetActive(true);
-                _items[i].Set(i + 1, item.UserName, item.Score);
+                _items[i].Set(i + 1, data[i].UserName, data[i].Score);
             }
         }
 
+        #region Override
+        public override ViewType ViewType => ViewType.HighScore;
         #endregion
     }
 }

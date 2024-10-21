@@ -10,7 +10,7 @@ namespace Cube.Controllers
     {
         [Header("References")]
         [SerializeField]
-        private List<View<INjectable>> _views;
+        private List<View> _views;
         [SerializeField]
         private GlobalData _globalData;
         [SerializeField]
@@ -64,16 +64,26 @@ namespace Cube.Controllers
             var item = Active(ViewType.HighScore, _globalData);
             _networkController.GetTopScores ( result => 
             {
-                item.Inject(result); // TODO InjectTopScore
+                GetView<HighScoreView>().Inject(result);
             }, Validations.TOP_SCORE_COUNT );
         }
         #endregion
 
-        private View<INjectable> Active(ViewType viewType, GlobalData data)
+        private T GetView<T>() where T : View
+        {
+            for (int i = 0; i < _views.Count; i++)
+            {
+                if (_views[i] is T)
+                    return (T)_views[i];
+            }
+            return null;
+        }
+
+        private View Active(ViewType viewType, GlobalData data)
         {
             DeactivateAll();
 
-            if (GetView(viewType, out View<INjectable> item))
+            if (GetView(viewType, out View item))
                 item.Active(data);
 
             return item;
@@ -85,7 +95,7 @@ namespace Cube.Controllers
                 if (view.IsActive) view.Deactivate();
         }
 
-        private bool GetView(ViewType viewType, out View<INjectable> item)
+        private bool GetView(ViewType viewType, out View item)
         {
             item = _views.Find(view => view.ViewType == viewType);
             if (item == null)

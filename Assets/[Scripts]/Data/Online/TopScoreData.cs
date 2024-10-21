@@ -35,7 +35,7 @@ namespace Cube.Data
     }
 
     [Serializable]
-    public class TopScoreItemData : INjectable
+    public class TopScoreItemData
     {
         public string UserName;
         public int Score;
