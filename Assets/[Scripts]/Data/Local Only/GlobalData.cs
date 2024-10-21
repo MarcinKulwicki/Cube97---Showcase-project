@@ -42,6 +42,7 @@ namespace Cube.Data
             _viewController.GetView<SettingsView>().OnUserNameChanged += UsernameChanged;
             _viewController.GetView<SettingsView>().OnMusicOnChanged += MusicOnChanged;
             _viewController.GetView<SettingsView>().OnEffectsOnChanged += EffectsOnChanged;
+            _viewController.GetView<GameOverlayView>().OnAppendScore += AppendScore;
         }
 
         private void OnDestroy() 
@@ -54,6 +55,7 @@ namespace Cube.Data
             _viewController.GetView<SettingsView>().OnUserNameChanged -= UsernameChanged;
             _viewController.GetView<SettingsView>().OnMusicOnChanged -= MusicOnChanged;
             _viewController.GetView<SettingsView>().OnEffectsOnChanged -= EffectsOnChanged;
+            _viewController.GetView<GameOverlayView>().OnAppendScore += AppendScore;
         }
         #endregion
 
@@ -63,5 +65,6 @@ namespace Cube.Data
         private void UsernameChanged(string userName) => _gameData.SetUserName(userName);
         private void MusicOnChanged(bool enable) => _gameSettings.SetMusic(enable);
         private void EffectsOnChanged(bool enable) => _gameSettings.SetEffects(enable);
+        private void AppendScore() => _gameData.SetScore(_gameData.Score + _gameData.LevelStage);
     }
 }
