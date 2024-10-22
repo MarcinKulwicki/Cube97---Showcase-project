@@ -10,8 +10,8 @@ namespace Cube.Controllers
         #region Variables
         public Action<int> OnStageChanged;
 
-        public LevelInitData InitData { get; private set; }   
-        
+        public LevelInitData InitData { get; private set; }
+
         [Header("References")]
         [SerializeField]
         private LevelGenerator _levelGenerator;
@@ -25,20 +25,20 @@ namespace Cube.Controllers
         private Difficulty _difficulty = Difficulty.Easy;
         [SerializeField]
         private int _step = 15;
-        
+
         private Level[] _levels;
         private int _stage = 0;
         #endregion
 
         #region MonoBehaviour
-        private void OnEnable() 
+        private void OnEnable()
         {
             GameHandler.Instance.OnGameStart += GameStart;
             GameHandler.Instance.OnNextLevel += NextLevel;
             GameHandler.Instance.OnGameStop += GameStop;
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             GameHandler.Instance.OnGameStart -= GameStart;
             GameHandler.Instance.OnNextLevel -= NextLevel;
@@ -48,7 +48,7 @@ namespace Cube.Controllers
 
         private void GameStart()
         {
-            TriggerLayer.Reset?.Invoke(); // Clear all collision information
+            TriggerLayer.Refresh?.Invoke(); // Clear all collision information
             Generate(1);
             _playerController.Respawn(InitData);
             CameraControl.Instance.Move(InitData.StartPos);
@@ -57,8 +57,8 @@ namespace Cube.Controllers
         private void NextLevel()
         {
             DeactivateAll();
-            
-            TriggerLayer.Reset?.Invoke(); // Clear all collision information
+
+            TriggerLayer.Refresh?.Invoke(); // Clear all collision information
             Generate();
             _playerController.Respawn(InitData);
             CameraControl.Instance.Move(InitData.StartPos);
@@ -84,9 +84,9 @@ namespace Cube.Controllers
             else
                 _stage = stage;
             OnStageChanged?.Invoke(_stage);
-            
+
             Clear();
-            
+
             InitData = new LevelInitData(_step, _stage, _difficulty);
             _levels = _levelGenerator.Make(InitData);
         }
@@ -116,11 +116,11 @@ namespace Cube.Controllers
         public LevelInitData(int step, int dimension, Difficulty difficulty)
         {
             StartPos = new Vector3
-            ( 
+            (
                 UnityEngine.Random.Range(0, dimension) * step,
-                0, 
+                0,
                 UnityEngine.Random.Range(0, dimension) * step
-            ); 
+            );
             StartRot = Quaternion.identity;
             Step = step;
             Dimension = dimension;

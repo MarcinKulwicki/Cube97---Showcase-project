@@ -6,11 +6,11 @@ namespace Cube.Data
     {
         public Action<int> OnScoreChanged;
         public Action<int> OnLevelStageChanged;
-        
+
         public string UserName { get; protected set; }
 
-        public int LevelStage 
-        { 
+        public int LevelStage
+        {
             get { return _levelStage; }
             protected set
             {
@@ -21,7 +21,7 @@ namespace Cube.Data
         public int Score
         {
             get { return _score; }
-            protected set 
+            protected set
             {
                 _score = value;
                 OnScoreChanged?.Invoke(value);

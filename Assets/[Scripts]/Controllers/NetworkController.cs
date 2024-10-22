@@ -7,19 +7,19 @@ namespace Cube.Controllers
     public class NetworkController : MonoBehaviour
     {
         public static bool IsOnline { get; private set; } = false; //TODO move it to NetworkConfig when will be ScriptableObject
-        
+
         public TopScoreData TopScoreData { get; private set; } = new();
 
         public void GetTopScores(Action<TopScoreItemData[]> OnSuccess, int limit)
         {
-            TopScoreData.Get(result => 
-            {   
+            TopScoreData.Get(result =>
+            {
                 OnSuccess?.Invoke
                 (
                     TopScoreData.Filter(result, TopScoreFilterType.Top, limit)
                 );
-            }, 
-            error =>  Debug.Log(error));
+            },
+            error => Debug.Log(error));
         }
 
         public void SendScore(GameData data)

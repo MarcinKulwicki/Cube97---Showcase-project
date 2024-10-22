@@ -5,24 +5,23 @@ namespace Cube.Logic
 {
     public abstract class ObjectMotion : MonoBehaviour
     {
-        public bool IsActive 
-        { 
+        public bool IsActive
+        {
             get => _isActive;
             protected set
             {
-                if (_renderer != null)  _renderer.enabled = value;
-                if (_collider != null)  _collider.enabled = value;
+                if (_renderer != null) _renderer.enabled = value;
+                if (_collider != null) _collider.enabled = value;
                 _isActive = value;
-            } 
+            }
         }
-        private CoroutineContainer _coroutine;
 
+        private CoroutineContainer _coroutine;
         private MeshRenderer _renderer;
         private Collider _collider;
-
         private bool _isActive;
 
-        protected virtual void Awake() 
+        protected virtual void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
             _collider = GetComponent<Collider>();

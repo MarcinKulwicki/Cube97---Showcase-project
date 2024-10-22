@@ -6,18 +6,19 @@ namespace Cube.Gameplay
 {
     public class Level : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField]
         List<ObjectMotion> _elements;
 
-        public void Activate() 
+        public void Activate()
         {
-            foreach(var item in _elements)
+            foreach (var item in _elements)
                 item.Activate();
         }
 
-        public void Deactivate() 
+        public void Deactivate()
         {
-            foreach(var item in _elements)
+            foreach (var item in _elements)
                 item.Deactivate();
         }
     }

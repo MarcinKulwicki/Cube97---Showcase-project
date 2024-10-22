@@ -7,9 +7,9 @@ namespace Cube.Gameplay
 {
     public class LevelGenerator : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField]
         private LevelDatabase[] _datas;
-
         [SerializeField]
         private Transform _lvlField;
 
@@ -23,7 +23,7 @@ namespace Cube.Gameplay
             Level[] levels = new Level[data.Dimension * data.Dimension];
 
             int counter = 0;
-            for (int i = 0 ; i < data.Dimension; i++)
+            for (int i = 0; i < data.Dimension; i++)
                 for (int j = 0; j < data.Dimension; j++)
                     levels[counter++] = Instantiate(GetRandom(data.Difficulty), new Vector3(i * data.Step, 0, j * data.Step), Quaternion.Euler(0, 45, 0), transform);
 
@@ -38,7 +38,7 @@ namespace Cube.Gameplay
         private Level GetRandom(Difficulty difficulty)
         {
             var data = GetDifficultySet(difficulty);
-            return data.Prefabs[ UnityEngine.Random.Range(0, data.Prefabs.Length -1)];
+            return data.Prefabs[UnityEngine.Random.Range(0, data.Prefabs.Length - 1)];
         }
 
         private LevelDatabase GetDifficultySet(Difficulty difficulty) => Array.Find(_datas, item => item.Difficulty == difficulty);

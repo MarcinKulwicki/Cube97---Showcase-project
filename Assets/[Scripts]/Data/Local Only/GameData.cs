@@ -11,7 +11,7 @@ namespace Cube.Data
             UserName = PlayerPrefs.GetString(USER_NAME_KEY, "Default Name");
         }
 
-        public void SetUserName(string userName) 
+        public void SetUserName(string userName)
         {
             PlayerPrefs.SetString(USER_NAME_KEY, userName);
             PlayerPrefs.Save();

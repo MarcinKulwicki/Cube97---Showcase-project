@@ -9,13 +9,13 @@ namespace Cube.Logic
         private Vector3 _rotateVector = new(0, 1, 0);
         [SerializeField]
         private float _turnSpeed = 60f;
-        
+
         private Quaternion _startRotation;
 
-        protected override void Awake() 
+        protected override void Awake()
         {
-            _startRotation = transform.rotation;  
-            base.Awake();  
+            _startRotation = transform.rotation;
+            base.Awake();
         }
 
         public override void Activate()

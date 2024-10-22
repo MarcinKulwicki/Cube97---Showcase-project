@@ -5,13 +5,14 @@ namespace Cube.Gameplay.Player
     [RequireComponent(typeof(Collider)), RequireComponent(typeof(PlayerVisual))]
     public class Player : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField]
-        PlayerControl _controls;
+        private PlayerControl _controls;
 
-        PlayerVisual _visual;
-        Collider _collider;
+        private PlayerVisual _visual;
+        private Collider _collider;
 
-        private void Awake() 
+        private void Awake()
         {
             _collider = GetComponent<Collider>();
             _visual = GetComponent<PlayerVisual>();
@@ -23,7 +24,7 @@ namespace Cube.Gameplay.Player
 
             GameHandler.Instance.SetStatus(GameStatus.StopGame);
 
-            _controls.Interrupt();            
+            _controls.Interrupt();
             _collider.enabled = false;
             _visual.SetStatus(VisualStatus.Killed);
         }
@@ -31,7 +32,7 @@ namespace Cube.Gameplay.Player
         public void Respawn(Vector3 pos, Quaternion rot)
         {
             _controls.Interrupt();
-            
+
             _visual.SetStatus(VisualStatus.Alive);
             transform.SetPositionAndRotation(pos, rot);
             _collider.enabled = false;

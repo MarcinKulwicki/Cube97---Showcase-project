@@ -25,14 +25,14 @@ namespace Cube.Data
         private GameSettings _gameSettings;
 
         #region MonoBehaviour
-        private void Awake() 
+        private void Awake()
         {
             // PlayerPrefs requirement
             _gameData = new();
             _gameSettings = new();
         }
 
-        private void Start() 
+        private void Start()
         {
             GameHandler.Instance.OnGameStart += ClearScore;
             GameHandler.Instance.OnGameStop += SendData;
@@ -45,7 +45,7 @@ namespace Cube.Data
             _viewController.GetView<GameOverlayView>().OnAppendScore += AppendScore;
         }
 
-        private void OnDestroy() 
+        private void OnDestroy()
         {
             GameHandler.Instance.OnGameStart -= ClearScore;
             GameHandler.Instance.OnGameStop -= SendData;

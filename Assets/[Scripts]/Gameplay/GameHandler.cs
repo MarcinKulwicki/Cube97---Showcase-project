@@ -21,7 +21,7 @@ namespace Cube.Gameplay
         private Dictionary<GameStatus, Action> _states;
 
         #region MonoBehaviour
-        protected override void Awake() 
+        protected override void Awake()
         {
             base.Awake();
 

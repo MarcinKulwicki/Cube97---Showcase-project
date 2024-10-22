@@ -10,19 +10,21 @@ namespace Cube.UI.View
         [SerializeField]
         private Button _resetBtn;
 
-        private void OnReset()
-        {
-            GameHandler.Instance.SetStatus(GameStatus.StartGame);
-        }
-
-        private void OnEnable() 
+        #region MonoBehaviour
+        private void OnEnable()
         {
             _resetBtn.onClick.AddListener(OnReset);
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _resetBtn.onClick.RemoveAllListeners();
+        }
+        #endregion
+
+        private void OnReset()
+        {
+            GameHandler.Instance.SetStatus(GameStatus.StartGame);
         }
 
         #region Override

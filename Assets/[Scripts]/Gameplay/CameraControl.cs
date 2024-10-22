@@ -5,13 +5,14 @@ namespace Cube.Gameplay
 {
     public class CameraControl : Singleton<CameraControl>
     {
+        [Header("Properties")]
         [SerializeField]
-        AnimationCurve _animation;
-        
-        Vector3 _shift;
-        CoroutineContainer _coroutine;
+        private AnimationCurve _animation;
 
-        protected override void Awake() 
+        private Vector3 _shift;
+        private CoroutineContainer _coroutine;
+
+        protected override void Awake()
         {
             base.Awake();
             _shift = transform.position;
@@ -29,8 +30,8 @@ namespace Cube.Gameplay
         {
             var startVec = transform.position;
             var endVec = _shift + targetPos;
-            
-            for(float i = 0; i <= 1; i += Time.fixedDeltaTime)
+
+            for (float i = 0; i <= 1; i += Time.fixedDeltaTime)
             {
                 transform.position = Vector3.Lerp(startVec, endVec, Mathf.Clamp01(_animation.Evaluate(i)));
                 yield return new WaitForFixedUpdate();

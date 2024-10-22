@@ -20,13 +20,13 @@ namespace Cube.Controllers
         /// <summary>
         ///     All views should be disabled at start
         /// </summary>
-        private void Awake() 
+        private void Awake()
         {
             foreach (var item in _views)
                 item.gameObject.SetActive(false);
         }
 
-        private void OnEnable() 
+        private void OnEnable()
         {
             GameHandler.Instance.OnGameStart += GameStart;
             GameHandler.Instance.OnGameStop += GameStop;
@@ -38,7 +38,7 @@ namespace Cube.Controllers
             GameHandler.Instance.OnAchievements += Achievements;
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             GameHandler.Instance.OnGameStart -= GameStart;
             GameHandler.Instance.OnGameStop -= GameStop;
@@ -62,10 +62,10 @@ namespace Cube.Controllers
         private void HighScore()
         {
             var item = Active(ViewType.HighScore, _globalData);
-            _networkController.GetTopScores ( result => 
+            _networkController.GetTopScores(result =>
             {
                 GetView<HighScoreView>().Inject(result);
-            }, Validations.TOP_SCORE_COUNT );
+            }, Global.TOP_SCORE_COUNT);
         }
         #endregion
 

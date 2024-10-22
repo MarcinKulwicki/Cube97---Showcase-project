@@ -8,9 +8,10 @@ namespace Cube.UI.View
     public class MainMenuView : View
     {
         [SerializeField]
-        Button _startGameBtn, _settingsBtn, _highScoreBtn, _workshopBtn, _achievementsBtn;
+        private Button _startGameBtn, _settingsBtn, _highScoreBtn, _workshopBtn, _achievementsBtn;
 
-        private void OnEnable() 
+        #region MonoBehaviour
+        private void OnEnable()
         {
             _startGameBtn.onClick.AddListener(OnStartGame);
             _settingsBtn.onClick.AddListener(OnSettings);
@@ -19,7 +20,7 @@ namespace Cube.UI.View
             _achievementsBtn.onClick.AddListener(OnAchievements);
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _startGameBtn.onClick.RemoveAllListeners();
             _settingsBtn.onClick.RemoveAllListeners();
@@ -27,6 +28,7 @@ namespace Cube.UI.View
             _workshopBtn.onClick.RemoveAllListeners();
             _achievementsBtn.onClick.RemoveAllListeners();
         }
+        #endregion
 
         private void OnStartGame() => GameHandler.Instance.SetStatus(GameStatus.StartGame);
         private void OnSettings() => GameHandler.Instance.SetStatus(GameStatus.Settings);

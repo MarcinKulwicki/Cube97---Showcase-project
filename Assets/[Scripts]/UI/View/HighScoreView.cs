@@ -10,45 +10,46 @@ namespace Cube.UI.View
 {
     public class HighScoreView : View
     {
+        [Header("References")]
         [SerializeField]
-        Button _backBtn;
-
+        private Button _backBtn;
         [SerializeField]
-        TopScoreItem _topScoreItem;
-
+        private TopScoreItem _topScoreItem;
         [SerializeField]
-        Transform _topScoreParent;
+        private Transform _topScoreParent;
 
-        List<TopScoreItem> _items = new();
+        private List<TopScoreItem> _items = new();
 
-        private void OnBack()
-        {
-            GameHandler.Instance.SetStatus(GameStatus.MainMenu);
-        }
-
-        private void OnEnable() 
+        #region MonoBehaviour
+        private void OnEnable()
         {
             _backBtn.onClick.AddListener(OnBack);
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _backBtn.onClick.RemoveAllListeners();
 
-            foreach(var item in _items)
+            foreach (var item in _items)
                 item.gameObject.SetActive(false);
         }
+        #endregion
 
         public void Inject(TopScoreItemData[] data)
         {
-            for(int i = 0; i < data.Length; i++)
+            for (int i = 0; i < data.Length; i++)
             {
                 if (_items.Count <= i)
                     _items.Add(Instantiate(_topScoreItem, _topScoreParent));
-                
+
                 _items[i].gameObject.SetActive(true);
                 _items[i].Set(i + 1, data[i].UserName, data[i].Score);
             }
+        }
+
+        private void OnBack()
+        {
+            GameHandler.Instance.SetStatus(GameStatus.MainMenu);
         }
 
         #region Override

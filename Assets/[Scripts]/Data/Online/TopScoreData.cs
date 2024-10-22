@@ -4,11 +4,11 @@ using Cube.Network;
 
 namespace Cube.Data
 {
-    public class TopScoreData : NetworkService<TopScoreItemData> 
+    public class TopScoreData : NetworkService<TopScoreItemData>
     {
         protected override string OnlineEndPoint => NetworkConfig.TOP_SCORE;
         protected override string OfflineEndPoint => NetworkConfig.TOP_SCORE_OFFLINE;
-        
+
         /// <summary>
         ///     Should be used only on local data. Data from BE should be filtered on BE.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Cube.Data
 
             return items;
         }
-    }  
+    }
 
     public enum TopScoreFilterType
     {

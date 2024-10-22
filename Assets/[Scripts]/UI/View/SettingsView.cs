@@ -23,14 +23,14 @@ namespace Cube.UI.View
         private TMP_InputField _userName;
 
         #region MonoBehaviour
-        private void OnEnable() 
+        private void OnEnable()
         {
             _backBtn.onClick.AddListener(OnBack);
             _music.onValueChanged.AddListener(OnMusicChanged);
             _effects.onValueChanged.AddListener(OnEffectsChanged);
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _backBtn.onClick.RemoveAllListeners();
             _music.onValueChanged.RemoveAllListeners();
@@ -49,7 +49,7 @@ namespace Cube.UI.View
 
         private void OnBack()
         {
-            if (_userName.text.Length >= Validations.MIN_LETTERS_USER_NAME)
+            if (_userName.text.Length >= Global.MIN_LETTERS_USER_NAME)
                 OnUserNameChanged?.Invoke(_userName.text);
 
             GameHandler.Instance.SetStatus(GameStatus.MainMenu);
@@ -57,7 +57,7 @@ namespace Cube.UI.View
 
         private void OnMusicChanged(bool enable) => OnMusicOnChanged?.Invoke(enable);
         private void OnEffectsChanged(bool enable) => OnEffectsOnChanged?.Invoke(enable);
-        
+
         #region Override
         public override ViewType ViewType => ViewType.Settings;
         #endregion

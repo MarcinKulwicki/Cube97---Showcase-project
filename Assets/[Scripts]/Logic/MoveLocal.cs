@@ -7,15 +7,15 @@ namespace Cube.Logic
     {
         [SerializeField]
         private Vector3 _moveVector = new(-1, 0, -1);
-        
         [SerializeField]
         private float _moveSpeed = 0.1f;
+
         private Vector3 _startPos;
 
-        protected override void Awake() 
+        protected override void Awake()
         {
             _startPos = transform.localPosition;
-            base.Awake(); 
+            base.Awake();
         }
 
         public override void Activate()

@@ -4,9 +4,9 @@ namespace Cube.Network
 {
     public class OnlineService<T> : AbstractService<T>
     {
-        public OnlineService(string ep) : base(ep) {}
-
         protected override string Url => NetworkConfig.URL;
+
+        public OnlineService(string ep) : base(ep) { }
 
         public override void Get(Action<T[]> OnSuccess, Action<string> OnFail)
         {

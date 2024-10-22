@@ -4,23 +4,25 @@ using UnityEngine.Events;
 
 public class TriggerLayer : MonoBehaviour
 {
-    public static Action Reset;
+    public static Action Refresh;
 
     [SerializeField]
     private LayerMask _layerMask;
-
     [SerializeField]
     private UnityEvent<Collider> _onEnter, _onExit;
+
     private bool _isInTrigger;
     private int _mask;
 
+    #region MonoBehaviour
     private void Awake() => _mask = _layerMask.value;
 
-    private void OnEnable() => Reset += OnReset;
+    private void OnEnable() => Refresh += OnRefresh;
 
-    private void OnDisable() => Reset -= OnReset;
+    private void OnDisable() => Refresh -= OnRefresh;
+    #endregion
 
-    private void OnReset() => _isInTrigger = false;
+    private void OnRefresh() => _isInTrigger = false;
 
     private void OnTriggerEnter(Collider other) 
     {

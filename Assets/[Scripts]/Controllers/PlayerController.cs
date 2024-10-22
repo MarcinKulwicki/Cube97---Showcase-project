@@ -18,10 +18,10 @@ namespace Cube.Controllers
 
             CoroutineContainer.Create(Activate());
         }
-        
-        private IEnumerator Activate() 
+
+        private IEnumerator Activate()
         {
-            yield return new WaitForSeconds(Validations.TIME_TO_GET_STARTED);
+            yield return new WaitForSeconds(Global.TIME_TO_GET_STARTED);
             _player.Activate();
         }
     }

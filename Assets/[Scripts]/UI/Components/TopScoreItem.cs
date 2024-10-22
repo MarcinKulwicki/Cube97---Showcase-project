@@ -2,20 +2,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 namespace Cube.UI.Components
 {
     public class TopScoreItem : MonoBehaviour
     {
         [SerializeField]
-        TextMeshProUGUI _lp, _userName, _score;
-
+        private TextMeshProUGUI _lp, _userName, _score;
         [SerializeField]
-        Color _oddNumberColor, _evenNumberColor;
-
+        private Color _oddNumberColor, _evenNumberColor;
         [SerializeField]
-        Image _image;
-
+        private Image _image;
 
         public void Set(int lp, string userName, int score)
         {

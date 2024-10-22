@@ -4,8 +4,11 @@ namespace Cube.Gameplay.Player
 {
     public class PlayerVisual : MonoBehaviour
     {
-        [SerializeField] MeshRenderer _renderer;
-        [SerializeField] Material _alive, _killed;
+        [Header("References")]
+        [SerializeField]
+        private MeshRenderer _renderer;
+        [SerializeField]
+        private Material _alive, _killed;
 
         public void SetStatus(VisualStatus visualStatus)
         {

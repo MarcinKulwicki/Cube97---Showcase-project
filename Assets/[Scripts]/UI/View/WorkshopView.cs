@@ -10,19 +10,21 @@ namespace Cube.UI.View
         [SerializeField]
         Button _backBtn;
 
-        private void OnBack()
-        {
-            GameHandler.Instance.SetStatus(GameStatus.MainMenu);
-        }
-
-        private void OnEnable() 
+        #region MonoBehaviour
+        private void OnEnable()
         {
             _backBtn.onClick.AddListener(OnBack);
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _backBtn.onClick.RemoveAllListeners();
+        }
+        #endregion
+
+        private void OnBack()
+        {
+            GameHandler.Instance.SetStatus(GameStatus.MainMenu);
         }
 
         #region Override

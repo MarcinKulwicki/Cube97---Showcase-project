@@ -11,6 +11,7 @@ namespace Cube.UI.View
     {
         public Action OnAppendScore;
 
+        [Header("References")]
         [SerializeField]
         private TextMeshProUGUI _scoreValue, _timerValue, _stageValue;
         [SerializeField]
@@ -20,21 +21,21 @@ namespace Cube.UI.View
         private float _timer;
 
         #region MonoBehaviour
-        private void OnEnable() 
+        private void OnEnable()
         {
             _data.GameData.OnScoreChanged += ScoreChanged;
             _data.GameData.OnLevelStageChanged += LevelStageChanged;
-            
+
             _coroutine = CoroutineContainer.Create(TimerLoop());
 
             _successNextStage.SetActive(_data.GameData.LevelStage > 0);
             _viewBlocker.SetActive(true);
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _coroutine.Interrupt();
-            
+
             _data.GameData.OnScoreChanged -= ScoreChanged;
             _data.GameData.OnLevelStageChanged -= LevelStageChanged;
         }
@@ -45,12 +46,12 @@ namespace Cube.UI.View
             _timer = 0f;
             _timerValue.gameObject.SetActive(true);
 
-            while (_timer % 60 < Validations.TIME_TO_GET_STARTED)
+            while (_timer % 60 < Global.TIME_TO_GET_STARTED)
             {
                 yield return new WaitForEndOfFrame();
 
                 _timer += Time.deltaTime;
-                _timerValue.text = Mathf.CeilToInt(Validations.TIME_TO_GET_STARTED - _timer % 60).ToString();
+                _timerValue.text = Mathf.CeilToInt(Global.TIME_TO_GET_STARTED - _timer % 60).ToString();
             }
 
             _timerValue.gameObject.SetActive(false);
@@ -66,7 +67,7 @@ namespace Cube.UI.View
 
         private void ScoreChanged(int value) => _scoreValue.text = value.ToString();
         private void LevelStageChanged(int value) => _stageValue.text = value.ToString();
-        
+
         #region Override
         public override ViewType ViewType => ViewType.GameOverlayView;
         #endregion
