@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cube.Controllers;
 using Cube.Data;
 using UnityEngine;
@@ -12,6 +13,16 @@ namespace Cube.Gameplay
         private LevelDatabase[] _datas;
         [SerializeField]
         private Transform _lvlField;
+
+        private Dictionary<Difficulty, LevelDatabase> _mappedLevels;
+
+        private void Awake()
+        {
+            _mappedLevels = new Dictionary<Difficulty, LevelDatabase>();
+
+            for (int i = 0; i < _datas.Length; i++)
+                _mappedLevels.Add(_datas[i].Difficulty, _datas[i]);
+        }
 
         public void OnPlayerExitField()
         {
@@ -35,12 +46,6 @@ namespace Cube.Gameplay
             return levels;
         }
 
-        private Level GetRandom(Difficulty difficulty)
-        {
-            var data = GetDifficultySet(difficulty);
-            return data.Prefabs[UnityEngine.Random.Range(0, data.Prefabs.Length - 1)];
-        }
-
-        private LevelDatabase GetDifficultySet(Difficulty difficulty) => Array.Find(_datas, item => item.Difficulty == difficulty);
+        private Level GetRandom(Difficulty difficulty) => _mappedLevels[difficulty].Prefabs[UnityEngine.Random.Range(0, _mappedLevels[difficulty].Prefabs.Length - 1)];
     }
 }

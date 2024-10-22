@@ -16,6 +16,8 @@ namespace Cube.Controllers
         [SerializeField]
         private NetworkController _networkController;
 
+        private Dictionary<ViewType, View> _mappedViews;
+
         #region MonoBehaviour
         /// <summary>
         ///     All views should be disabled at start
@@ -24,6 +26,9 @@ namespace Cube.Controllers
         {
             foreach (var item in _views)
                 item.gameObject.SetActive(false);
+
+            _mappedViews = new Dictionary<ViewType, View>();
+            _views.ForEach(element => _mappedViews.Add(element.ViewType, element));
         }
 
         private void OnEnable()
@@ -61,7 +66,7 @@ namespace Cube.Controllers
         private void Achievements() => Active(ViewType.Achievements, _globalData);
         private void HighScore()
         {
-            var item = Active(ViewType.HighScore, _globalData);
+            Active(ViewType.HighScore, _globalData);
             _networkController.GetTopScores(result =>
             {
                 GetView<HighScoreView>().Inject(result);
@@ -79,31 +84,16 @@ namespace Cube.Controllers
             return null;
         }
 
-        private View Active(ViewType viewType, GlobalData data)
+        private void Active(ViewType viewType, GlobalData data)
         {
             DeactivateAll();
-
-            if (GetView(viewType, out View item))
-                item.Active(data);
-
-            return item;
+            _mappedViews[viewType].Active(data);
         }
 
         private void DeactivateAll()
         {
             foreach (var view in _views)
                 if (view.IsActive) view.Deactivate();
-        }
-
-        private bool GetView(ViewType viewType, out View item)
-        {
-            item = _views.Find(view => view.ViewType == viewType);
-            if (item == null)
-            {
-                Debug.LogError($"{viewType} does not exsit.");
-                return false;
-            }
-            return true;
         }
     }
 
